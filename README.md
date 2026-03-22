@@ -1,8 +1,8 @@
-<h1 align="center">XGH — GitHub Toolkit</h1>
+<h1 align="center">X GitHub Toolkit</h1>
 
 <p align="center">
-  <img src="https://xscriptordev.github.io/badges/social/github.svg" alt="GitHub" />
-  <img src="https://xscriptordev.github.io/badges/ci/github-actions.svg" alt="GitHub Actions" />
+  <img src="https://xscriptor.github.io/badges/social/github.svg" alt="GitHub" />
+  <img src="https://xscriptor.github.io/badges/ci/github-actions.svg" alt="GitHub Actions" />
 </p>
 
 <p align="center">
