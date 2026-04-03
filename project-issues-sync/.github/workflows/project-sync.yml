@@ -1,0 +1,42 @@
+name: Project Issues Sync
+
+on:
+  issues:
+    types: [opened, labeled, closed, reopened]
+
+jobs:
+  sync_to_project:
+    runs-on: ubuntu-latest
+    steps:
+      # Poner en Todo cuando se abre o se reabre
+      - name: Set 'Todo' status
+        if: github.event.action == 'opened' || github.event.action == 'reopened'
+        uses: leonsteinhaeuser/project-beta-automations@v2.2.1
+        with:
+          gh_token: ${{ secrets.PROJECT_PAT }}
+          user: xscriptor
+          project_id: 1 # Cambiar por el número de tu proyecto (ID)
+          resource_node_id: ${{ github.event.issue.node_id }}
+          status_value: "Todo"
+
+      # Poner en In Progress cuando se añade el label de en progreso
+      - name: Set 'In Progress' status
+        if: github.event.action == 'labeled' && github.event.label.name == 'in-progress'
+        uses: leonsteinhaeuser/project-beta-automations@v2.2.1
+        with:
+          gh_token: ${{ secrets.PROJECT_PAT }}
+          user: xscriptor
+          project_id: 1
+          resource_node_id: ${{ github.event.issue.node_id }}
+          status_value: "In Progress"
+
+      # Poner en Done cuando se cierra
+      - name: Set 'Done' status
+        if: github.event.action == 'closed'
+        uses: leonsteinhaeuser/project-beta-automations@v2.2.1
+        with:
+          gh_token: ${{ secrets.PROJECT_PAT }}
+          user: xscriptor
+          project_id: 1
+          resource_node_id: ${{ github.event.issue.node_id }}
+          status_value: "Done"
