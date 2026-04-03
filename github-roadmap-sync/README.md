@@ -22,6 +22,7 @@ and the GitHub Action handles the rest:
 | `- [/]`  | Open (or reopen if closed); add `in-progress` label |
 | `- [x]`  | Close issue; remove `in-progress` label if present |
 | No `(#N)` | **Auto-creates** the issue, writes the number back to the file, and commits |
+| Modify text | **Renames** the GitHub issue to match the updated text in the roadmap |
 
 ## Script Details — `sync_roadmap.py`
 
@@ -44,6 +45,7 @@ All tasks with issue numbers are synced:
 - **`[ ]` (todo):** Reopens the issue if closed; removes the `in-progress` label if present.
 - **`[/]` (in-progress):** Reopens the issue if closed; adds the `in-progress` label if missing.
 - **`[x]` (done):** Closes the issue if open; removes the `in-progress` label if present.
+- **Titles:** If the text of the task in `ROADMAP.md` differs from the GitHub issue title, the issue is renamed. `ROADMAP.md` is the single source of truth for titles.
 
 Labels (`in-progress` and phase labels) are **auto-created** if they don't exist on the repository.
 
@@ -153,3 +155,11 @@ python3 .github/scripts/sync_roadmap.py --repo owner/repo
    ```
 
 7. Push → issue `#46` is closed and `in-progress` label is removed.
+
+8. Rename the task:
+   ```diff
+   -- [x] Add retry logic to download manager (#46)
+   +- [x] Add exponential backoff retry logic (#46)
+   ```
+
+9. Push → issue `#46` title is updated in GitHub to match the new text.
